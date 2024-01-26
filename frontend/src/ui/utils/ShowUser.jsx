@@ -1,0 +1,28 @@
+import Transfer from "./Transfer"
+import { useState } from "react"
+import Modal from "react-modal"
+
+export default function ShowUser({ firstName, lastName, username }) {
+    const [modal, setModal] = useState(false)
+
+    function handleClick() {
+        setModal(true)
+    }
+    return (
+        <div>
+            <div className="pl-4 mt-4 mb-4 box-border border-4 h-14 flex items-center text-l whitespace-normal">
+                <b className="pr-2">
+                    {firstName} {lastName}
+                </b>
+                ({username})
+                <button
+                    className="ml-auto mr-4 rounded-md bg-black h-8 text-white w-24"
+                    onClick={handleClick}>Send Money</button>
+                <Modal
+                    isOpen={modal}
+                    onRequestClose={() => setModal(false)}
+                />
+            </div>
+        </div>
+    )
+}

@@ -33,7 +33,7 @@ userRouter.post('/signup', async (req, res) => {
             firstName: isValid.data.firstName,
             lastName: isValid.data.lastName,
             password: hashedpassword,
-            balance: 1 + Math.random(10000),
+            balance: parseInt(1 + Math.random() * 10000),
             salt: salt
         })
         const user = await newUser.save()
