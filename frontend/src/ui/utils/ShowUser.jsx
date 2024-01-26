@@ -21,7 +21,9 @@ export default function ShowUser({ firstName, lastName, username }) {
                 <Modal
                     isOpen={modal}
                     onRequestClose={() => setModal(false)}
-                />
+                >
+                    <Transfer firstName={firstName} lastName={lastName} />
+                </Modal>
             </div>
         </div>
     )

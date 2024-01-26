@@ -97,8 +97,10 @@ authRouter.post('/transaction', authMiddleware, async (req, res) => {
     const session = await mongoose.startSession()
     session.startTransaction()
     const {to, from, amount} = req.body
+    console.log(to, from, amount)
+    const money = parseInt(amount)
     const sender = await User.findOne({ username: from }).session(session)
-    if (!sender || sender.balance < amount) {
+    if (!sender || sender.balance < money) {
         await session.abortTransaction()
         session.endSession()
         res.status(400).json({ msg: "Insufficient balance" })
@@ -111,8 +113,8 @@ authRouter.post('/transaction', authMiddleware, async (req, res) => {
         res.status(400).json({ msg: "The receiver doesn't exist" })
         return;
     }
-    await User.updateOne({ username: from }, { $inc: { balance: -amount } }).session(session)
-    await User.updateOne({ username: to }, { $inc: { balance: amount } }).session(session)
+    await User.updateOne({ username: from }, { $inc: { balance: -money } }).session(session)
+    await User.updateOne({ username: to }, { $inc: { balance: money } }).session(session)
     await session.commitTransaction()
     session.endSession()
     res.status(200).json({ msg: "Transaction successful" })

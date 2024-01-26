@@ -55,7 +55,7 @@ export default function Dashboard({ firstname, lastname, balance }) {
                 <Modal
                     isOpen={modal}
                     onRequestClose={() => setModal(false)}
-                    className="flex flex-col items-center justify-center h-screen"
+                    className="flex flex-col justify-center items-center pt-44"
                 ><PIN /></Modal>
                 <button
                     className="mt-4 text-xl ml-auto mr-4 text-white bg-black h-9 w-20 rounded-lg"
