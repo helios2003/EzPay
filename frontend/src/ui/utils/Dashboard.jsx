@@ -1,19 +1,22 @@
-import { useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
+import { FaSearch } from "react-icons/fa"
+import { useNavigate } from "react-router-dom"
 import Modal from "react-modal"
-import axios from "axios";
-import PIN from "./PIN";
-import UserList from "./UserList";
+import axios from "axios"
+import PIN from "./PIN"
+import UserList from "./UserList"
 
 export default function Dashboard({ firstname, lastname, balance }) {
     const [users, setUsers] = useState([])
-    const [searchTerm, setSearchTerm] = useState("");
+    const [searchTerm, setSearchTerm] = useState("")
     const [modal, setModal] = useState(false)
     const navigate = useNavigate()
 
     function handleLogout() {
         localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('firstName')
+        localStorage.removeItem('lastName')
         navigate('/api/v1/signin')
     }
 
@@ -23,8 +26,8 @@ export default function Dashboard({ firstname, lastname, balance }) {
 
     async function searchUsers() {
         try {
-            const url = "http://localhost:3000/api/v2/users";
-            const token = localStorage.getItem('token');
+            const url = "http://localhost:3000/api/v2/users"
+            const token = localStorage.getItem('token')
 
             const response = await axios.get(url, {
                 headers: {
@@ -34,12 +37,12 @@ export default function Dashboard({ firstname, lastname, balance }) {
                     filter: searchTerm
                 }
             })
-            const userData = response.data;
-            setUsers(userData);
-            console.log('User Data:', userData);
-            return userData;
+            const userData = response.data
+            setUsers(userData)
+            console.log('User Data:', userData)
+            return userData
         } catch (error) {
-            console.error('Error searching user:', error);
+            console.error('Error searching user:', error)
         }
     }
 
@@ -56,7 +59,7 @@ export default function Dashboard({ firstname, lastname, balance }) {
                     isOpen={modal}
                     onRequestClose={() => setModal(false)}
                     className="flex flex-col justify-center items-center pt-44"
-                ><PIN /></Modal>
+                ><PIN username={"ankit@gmail.com"} /></Modal>
                 <button
                     className="mt-4 text-xl ml-auto mr-4 text-white bg-black h-9 w-20 rounded-lg"
                     onClick={handleLogout}

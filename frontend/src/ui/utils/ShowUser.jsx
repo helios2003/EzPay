@@ -1,6 +1,7 @@
 import Transfer from "./Transfer"
 import { useState } from "react"
 import Modal from "react-modal"
+import UserCard from "./UserCard"
 
 export default function ShowUser({ firstName, lastName, username }) {
     const [modal, setModal] = useState(false)
@@ -10,7 +11,8 @@ export default function ShowUser({ firstName, lastName, username }) {
     }
     return (
         <div>
-            <div className="pl-4 mt-4 mb-4 box-border border-4 h-14 flex items-center text-l whitespace-normal">
+            <div className="pl-2 mt-4 mb-4 box-border border-4 h-14 flex items-center text-l whitespace-normal">
+            <UserCard firstName={firstName} />
                 <b className="pr-2">
                     {firstName} {lastName}
                 </b>
@@ -22,7 +24,7 @@ export default function ShowUser({ firstName, lastName, username }) {
                     isOpen={modal}
                     onRequestClose={() => setModal(false)}
                 >
-                    <Transfer firstName={firstName} lastName={lastName} />
+                    <Transfer firstName={firstName} lastName={lastName} username={username} />
                 </Modal>
             </div>
         </div>

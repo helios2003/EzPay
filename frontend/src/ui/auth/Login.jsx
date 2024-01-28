@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import LoginPage from "../../components/auth/Login";
+import LoginPage from "../../components/auth/LoginPage";
 
 export default function Login() {
     const [username, setUsername] = useState("");
@@ -43,7 +43,7 @@ export default function Login() {
                 </div>
                 <button
                     onClick={handleSubmit}
-                    className="bg-cyan-500 h-8 w-20 rounded-lg hover:bg-green-500">
+                    className="bg-black h-8 w-20 rounded-lg hover:bg-gray-700 text-white">
                     Submit
                 </button>
                 <button 

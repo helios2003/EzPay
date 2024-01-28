@@ -13,6 +13,9 @@ export default async function RegisterPage({ username, firstName, lastName, pass
         const token = response.data.token
         console.log("token set")
         localStorage.setItem('token', token);
+        localStorage.setItem('username', response.data.username);
+        localStorage.setItem('firstName', response.data.firstName);
+        localStorage.setItem('lastName', response.data.lastName);
       } else {
         console.log("Invalid username or password");
       }

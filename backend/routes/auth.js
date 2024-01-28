@@ -38,7 +38,12 @@ userRouter.post('/signup', async (req, res) => {
         })
         const user = await newUser.save()
         const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '1h' });
-        res.status(201).json({ msg: "New user created", token: token })
+        res.status(201).json({ 
+            msg: "New user created", 
+            token: token, username: user.username, 
+            firstName: user.firstName, 
+            lastName: user.lastName
+        })
     } catch(err) {
         console.error(err);
         res.status(500).json({ msg: "Oops!!, some error happened"})
@@ -58,7 +63,13 @@ userRouter.post('/signin', async (req, res) => {
             return res.status(411).json({ msg: "The password is incorrect" })
         } 
         const token = jwt.sign({ userId: user._id }, process.env.JWT_KEY, { expiresIn: '1h' });
-        return res.status(200).json({ msg: "Welcome back!!", token: token })
+        return res.status(200).json({ 
+            msg: "Welcome back!!", 
+            token: token,
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName
+        })
     } catch(err) {
         console.error(err);
         res.status(500).json({ msg: "Oops!!, some error happened"})

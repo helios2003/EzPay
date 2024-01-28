@@ -1,54 +1,63 @@
-import React from 'react';
-import { TiTick } from 'react-icons/ti';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React from 'react'
+import { TiTick } from 'react-icons/ti'
+import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-export default function PIN() {
-  let submitString = "";
-  const inputRefs = Array.from({ length: 4 }, () => React.createRef());
+export default function PIN( { username }) {
+  let submitString = ""
+  const inputRefs = Array.from({ length: 4 }, () => React.createRef())
 
   const success = (time) => {
-    console.log("success");
+    console.log("success")
     toast.success("PIN successfully added", { autoClose: time })
   }
   const failure = (time) => {
-    toast.error("Unsuccessful, please try again", { autoClose: time });
+    toast.error("Unsuccessful, please try again", { autoClose: time })
   }
 
   const handleInputChange = (index, value) => {
     if (value.length === 1 && index < inputRefs.length - 1) {
-      inputRefs[index + 1].current.focus();
-      submitString += value;
-      console.log(submitString);
+      inputRefs[index + 1].current.focus()
+      submitString += value
+      console.log(submitString)
     } else if (value.length === 0 && index > 0) {
-      inputRefs[index - 1].current.focus();
-      submitString = submitString.slice(0, -1);
+      inputRefs[index - 1].current.focus()
+      submitString = submitString.slice(0, -1)
     }
-  };
+  }
 
   const handleKeyDown = (index, e) => {
     if (e.key === 'Backspace' && index > 0 && !inputRefs[index].current.value) {
-      inputRefs[index - 1].current.focus();
-      submitString = submitString.slice(0, -1); 
+      inputRefs[index - 1].current.focus()
+      submitString = submitString.slice(0, -1)
     }
-  };
+  }
 
   const handleSubmit = async () => {
+    console.log(submitString)
+    const token = localStorage.getItem('token')
+    const url = "http://localhost:3000/api/v2/addpin"
     try {
-      const response = await axios.post('http://localhost:3000/api/v2/addpin', {
-        username: "sexy@gmail.com",
+      const response = await axios.post(url, {
+        username: localStorage.getItem('username'),
         PIN: submitString,
-      })
+      },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
       if (response.status === 200) {
-        success(2000);
+        success(2000)
       } else {
-        failure(2000);
+        failure(2000)
       }
     } catch (error) {
+      console.error(error)
       failure(2000)
     }
-  };
+  }
 
   return (
     <>
@@ -72,7 +81,7 @@ export default function PIN() {
         className="mt-6 h-14 w-14 bg-black text-white rounded-full"
         onClick={handleSubmit}
       />
-       <ToastContainer />
+      <ToastContainer />
     </>
-  );
+  )
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RegisterPage from "../../components/auth/Register";
+import RegisterPage from "../../components/auth/RegisterPage";
 
 export default function Register() {
     const [username, setUsername] = useState("")
@@ -63,7 +63,7 @@ export default function Register() {
                 </div> 
                 <button 
                     onClick={handleSubmit}
-                    className="bg-cyan-500 h-8 w-20 rounded-lg hover:bg-green-500">
+                    className="bg-black h-8 w-20 rounded-lg hover:bg-gray-700 text-white">
                         Submit
                 </button> 
                 <button 
