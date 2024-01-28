@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { FaSearch } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import Modal from "react-modal"
@@ -46,6 +46,14 @@ export default function Dashboard({ firstname, lastname, balance }) {
         }
     }
 
+    // debouncing
+    useEffect(() => {
+        const delayTimer = setTimeout(() => {
+          searchUsers()
+        }, 300)
+        return () => clearTimeout(delayTimer)
+      }, [searchTerm])
+
     return <div>
         <div className="flex flex-row border box-border h-16 shadow-md">
             <h1 className="text-2xl ml-6 mt-4"><b>EzPay</b></h1>
@@ -59,14 +67,14 @@ export default function Dashboard({ firstname, lastname, balance }) {
                     isOpen={modal}
                     onRequestClose={() => setModal(false)}
                     className="flex flex-col justify-center items-center pt-44"
-                ><PIN username={"ankit@gmail.com"} /></Modal>
+                ><PIN /></Modal>
                 <button
                     className="mt-4 text-xl ml-auto mr-4 text-white bg-black h-9 w-20 rounded-lg"
                     onClick={handleLogout}
                 >Logout</button>
             </div>
         </div>
-        <p className="ml-6 mt-3 text-xl"><b>Your Balance:</b> {balance}$</p>
+        <p className="ml-6 mt-3 text-xl"><b>Your Balance:</b> {balance} Rupees</p>
         <p className="ml-6 mt-3"><b><i>Search for Users</i></b></p>
         <div className="flex flex-row">
             <input type="text"

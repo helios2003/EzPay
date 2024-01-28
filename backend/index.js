@@ -24,6 +24,11 @@ app.use('/api/v2', authRouter)
 
 const PORT = 3000
 
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).json({ msg: "Oops!!, an unexpected error occured" })
+})
+
 app.listen(PORT, () => {
     console.log(`Server is running at port ${PORT}`)
 })

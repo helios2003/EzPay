@@ -10,6 +10,7 @@ export default async function LoginPage({ username, password }) {
         localStorage.setItem('username', response.data.username);
         localStorage.setItem('firstName', response.data.firstName);
         localStorage.setItem('lastName', response.data.lastName);
+        localStorage.setItem('balance', response.data.balance)
       } else {
         console.log("Invalid username or password");
       }

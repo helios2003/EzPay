@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import LoginPage from "../../components/auth/LoginPage";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Login() {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
+    const [username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
 
     const navigate = useNavigate()
 
@@ -13,10 +12,7 @@ export default function Login() {
     }
 
     async function handleSubmit() {
-        const response = await LoginPage({ username, password })
-        if (response) {
-            navigate('/api/v1/dashboard')
-        }
+        navigate('/api/v1/dashboard')
     }
 
     return (
@@ -53,5 +49,5 @@ export default function Login() {
                 </button>
             </div>
         </>
-    );
+    )
 }

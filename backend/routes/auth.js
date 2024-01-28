@@ -42,7 +42,8 @@ userRouter.post('/signup', async (req, res) => {
             msg: "New user created", 
             token: token, username: user.username, 
             firstName: user.firstName, 
-            lastName: user.lastName
+            lastName: user.lastName,
+            balance: user.balance
         })
     } catch(err) {
         console.error(err);
@@ -68,7 +69,8 @@ userRouter.post('/signin', async (req, res) => {
             token: token,
             username: user.username,
             firstName: user.firstName,
-            lastName: user.lastName
+            lastName: user.lastName,
+            balance: user.balance
         })
     } catch(err) {
         console.error(err);

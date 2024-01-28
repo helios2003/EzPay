@@ -78,11 +78,20 @@ authRouter.put('/update', authMiddleware, async (req, res) => {
     }
 })
 
+const PINbody =  z.object({
+    username: z.string(),
+    PIN: z.string().min(4).max(4)
+})
+
 // add a PIN for transactions
 authRouter.post('/addpin', authMiddleware, async (req, res) => {
     try {
-        const user = await User.findOne({ username: req.body.username })
-        const PIN = req.body.PIN
+        const isValid = PINbody.safeParse(req.body)
+        if (!isValid.success) {
+            res.status(400).json({ msg: "Oops, incorrect inputs" })
+        }
+        const user = await User.findOne({ username: isValid.data.username })
+        const PIN = isValid.data.PIN
         user.PIN = PIN
         await user.save()
         res.status(200).json({ msg: "PIN added successfully" })
@@ -91,13 +100,11 @@ authRouter.post('/addpin', authMiddleware, async (req, res) => {
         res.status(500).json({ msg: "Oops!!, some error happened"})
     }
 })
-
 // Execute a transaction
 authRouter.post('/transaction', authMiddleware, async (req, res) => {
     const session = await mongoose.startSession()
     session.startTransaction()
     const {to, from, amount} = req.body
-    console.log(to, from, amount)
     const money = parseInt(amount)
     const sender = await User.findOne({ username: from }).session(session)
     if (!sender || sender.balance < money) {

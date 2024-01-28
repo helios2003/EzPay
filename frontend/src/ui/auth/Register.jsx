@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import RegisterPage from "../../components/auth/RegisterPage";
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 export default function Register() {
     const [username, setUsername] = useState("")
@@ -15,10 +14,7 @@ export default function Register() {
     }
 
     async function handleSubmit() {
-        const response = RegisterPage({ username, firstName, lastName, password })
-        if (response) {
-            navigate('/api/v1/dashboard')
-        }
+        navigate('/api/v1/dashboard')
     }
 
     return (
@@ -73,5 +69,5 @@ export default function Register() {
                 </button>
             </div>
         </>
-    );
+    )
 }

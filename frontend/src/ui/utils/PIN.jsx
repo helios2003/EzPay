@@ -1,36 +1,35 @@
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import { TiTick } from 'react-icons/ti'
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-export default function PIN( { username }) {
-  let submitString = ""
-  const inputRefs = Array.from({ length: 4 }, () => React.createRef())
+export default function PIN() {
+  const inputRefs = Array.from({ length: 4 }, () => useRef(null))
 
   const success = (time) => {
     console.log("success")
     toast.success("PIN successfully added", { autoClose: time })
   }
+
   const failure = (time) => {
     toast.error("Unsuccessful, please try again", { autoClose: time })
   }
-
-  const handleInputChange = (index, value) => {
-    if (value.length === 1 && index < inputRefs.length - 1) {
+  let submitString = ""
+  function handleChange(value, index) {
+    if (value.length == 1 && index < inputRefs.length - 1) {
       inputRefs[index + 1].current.focus()
       submitString += value
-      console.log(submitString)
-    } else if (value.length === 0 && index > 0) {
-      inputRefs[index - 1].current.focus()
-      submitString = submitString.slice(0, -1)
     }
   }
 
-  const handleKeyDown = (index, e) => {
-    if (e.key === 'Backspace' && index > 0 && !inputRefs[index].current.value) {
+  function handleBackspaceAndEnter(e, index) {
+    if (e.key === "Backspace" && !e.target.value && index > 0) {
       inputRefs[index - 1].current.focus()
       submitString = submitString.slice(0, -1)
+    }
+    if (e.key === "Enter" && e.target.value && index < otp.length - 1) {
+      inputRefs[index + 1].current.focus()
     }
   }
 
@@ -38,16 +37,21 @@ export default function PIN( { username }) {
     console.log(submitString)
     const token = localStorage.getItem('token')
     const url = "http://localhost:3000/api/v2/addpin"
+    
     try {
-      const response = await axios.post(url, {
-        username: localStorage.getItem('username'),
-        PIN: submitString,
-      },
+      const response = await axios.post(
+        url,
+        {
+          username: localStorage.getItem('username'),
+          PIN: submitString,
+        },
         {
           headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+
       if (response.status === 200) {
         success(2000)
       } else {
@@ -71,8 +75,8 @@ export default function PIN( { username }) {
             pattern="[0-9]*"
             maxLength="1"
             className="text-2xl border-2 border-black h-14 w-14 rounded-lg text-center"
-            onChange={(e) => handleInputChange(index, e.target.value)}
-            onKeyDown={(e) => handleKeyDown(index, e)}
+            onChange={(e) => handleChange(e.target.value, index)}
+            onKeyDown={(e) => handleBackspaceAndEnter(e, index)}
             ref={ref}
           />
         ))}
