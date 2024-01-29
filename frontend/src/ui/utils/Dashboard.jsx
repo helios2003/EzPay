@@ -5,8 +5,10 @@ import Modal from "react-modal"
 import axios from "axios"
 import PIN from "./PIN"
 import UserList from "./UserList"
+import { FaMoneyBill } from "react-icons/fa"
 
-export default function Dashboard({ firstname, lastname, balance }) {
+export default function Dashboard({ firstName, lastName, balance }) {
+
     const [users, setUsers] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const [modal, setModal] = useState(false)
@@ -17,6 +19,7 @@ export default function Dashboard({ firstname, lastname, balance }) {
         localStorage.removeItem('username')
         localStorage.removeItem('firstName')
         localStorage.removeItem('lastName')
+        localStorage.removeItem('balance')
         navigate('/api/v1/signin')
     }
 
@@ -56,8 +59,9 @@ export default function Dashboard({ firstname, lastname, balance }) {
 
     return <div>
         <div className="flex flex-row border box-border h-16 shadow-md">
-            <h1 className="text-2xl ml-6 mt-4"><b>EzPay</b></h1>
-            <h1 className="text-2xl mt-4 mx-auto">Hello {firstname} {lastname}</h1>
+            <FaMoneyBill  className="pb-3 pl-2 w-12 h-20"/>
+            <h1 className="text-2xl pl-3 mt-4"><b>EzPay</b></h1>
+            <h1 className="text-2xl mt-4 mx-auto">Hello {firstName} {lastName}</h1>
             <div className="space-x">
                 <button
                     className="mt-4 text-xl mr-4 bg-black text-white h-9 w-24 rounded-lg"

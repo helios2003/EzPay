@@ -17,8 +17,10 @@ export default function PIN() {
   }
   let submitString = ""
   function handleChange(value, index) {
-    if (value.length == 1 && index < inputRefs.length - 1) {
-      inputRefs[index + 1].current.focus()
+    if (value.length == 1 && index < inputRefs.length) {
+      if (index < inputRefs.length - 1) {
+        inputRefs[index + 1].current.focus()
+      }
       submitString += value
     }
   }

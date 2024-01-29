@@ -1,20 +1,37 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import RegisterPage from "../../components/auth/RegisterPage"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Register() {
     const [username, setUsername] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
     const [password, setPassword] = useState("")
-
     const navigate = useNavigate()
+    
+    const success = (time) => {
+        toast.success("Welcome to the app", { autoClose: time })
+    }
+    const failure = (time) => {
+        toast.error("Please provide correct inputs", { autoClose: time })
+    }
 
     function handleClick() {
         navigate('/api/v1/signin')
     }
-
+    
     async function handleSubmit() {
-        navigate('/api/v1/dashboard')
+        await RegisterPage({ username, firstName, lastName, password})
+        const token = localStorage.getItem('token')
+        if (token === null || token === undefined) {
+            failure(2000)
+            navigate('/api/v1/signup')
+        } else {
+            success(2000)
+            navigate('/api/v1/dashboard')
+        }
     }
 
     return (
@@ -67,6 +84,7 @@ export default function Register() {
                     className="hover:underline hover:text-blue-900">
                         Are you an existing user? Sign In instead
                 </button>
+                <ToastContainer />
             </div>
         </>
     )

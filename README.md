@@ -4,8 +4,8 @@ EzPay is an E-payment app made in the MERN stack. Through this app, users can ma
 
 ## Features
 
-- User can add a PIN to your account for secured payments.
-- Users can make and receive payments to other users.
+- User can add a PIN to their account for secured payments.
+- Users can make and receive payments from other users.
 - Users can search for other users by their names.
 
 ## Setting up the project

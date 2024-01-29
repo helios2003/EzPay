@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 
 export default function Transfer({ firstName, lastName, username }) {
     const [money, setMoney] = useState(0)
+    const [PIN, setPIN] = useState("")
 
     const success = (time) => {
         console.log("success")
@@ -24,6 +25,7 @@ export default function Transfer({ firstName, lastName, username }) {
             const response = await axios.post(url, {
                 to: username,
                 from: localStorage.getItem('username'),
+                PIN: PIN,
                 amount: parseInt(money),
             }, {
                 headers: {

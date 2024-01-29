@@ -9,7 +9,7 @@ const app = express()
 dotenv.config({ path: '../.env' })
 
 const options = {
-  socketTimeoutMS: 30000,
+  socketTimeoutMS: 3000000,
 };
 
 app.use(bodyParser.json());

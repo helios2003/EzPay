@@ -1,18 +1,36 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import LoginPage from "../../components/auth/LoginPage"
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-
     const navigate = useNavigate()
+
+    const success = (time) => {
+        console.log("success")
+        toast.success("Welcome back !!", { autoClose: time })
+    }
+    const failure = (time) => {
+        toast.error("Username or password is invalid", { autoClose: time })
+    }
 
     function handleClick() {
         navigate('/api/v1/signup')
     }
 
     async function handleSubmit() {
-        navigate('/api/v1/dashboard')
+        await LoginPage({ username, password })
+        const token = localStorage.getItem('token')
+        if (token === null || token === undefined) {
+            failure(2000)
+            navigate('/api/v1/signin')
+        } else {
+            success(2000)
+            navigate('/api/v1/dashboard')
+        }
     }
 
     return (
@@ -42,11 +60,12 @@ export default function Login() {
                     className="bg-black h-8 w-20 rounded-lg hover:bg-gray-700 text-white">
                     Submit
                 </button>
-                <button 
+                <button
                     onClick={handleClick}
                     className="hover:underline hover:text-blue-900">
                     Are you a new User? Sign Up instead
                 </button>
+                <ToastContainer />
             </div>
         </>
     )
