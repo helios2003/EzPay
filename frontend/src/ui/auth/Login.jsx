@@ -7,6 +7,8 @@ import 'react-toastify/dist/ReactToastify.css'
 export default function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [userData, setUserData] = useState(null)
+
     const navigate = useNavigate()
 
     const success = (time) => {
@@ -22,7 +24,8 @@ export default function Login() {
     }
 
     async function handleSubmit() {
-        await LoginPage({ username, password })
+        const user = await LoginPage({ username, password })
+        setUserData(user) 
         const token = localStorage.getItem('token')
         if (token === null || token === undefined) {
             failure(2000)

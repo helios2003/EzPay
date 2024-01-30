@@ -5,7 +5,7 @@ import UserCard from "./UserCard"
 
 export default function ShowUser({ firstName, lastName, username }) {
     const [modal, setModal] = useState(false)
-
+    console.log("in show user funtion")
     function handleClick() {
         setModal(true)
     }

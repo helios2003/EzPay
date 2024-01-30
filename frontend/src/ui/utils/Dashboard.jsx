@@ -8,19 +8,18 @@ import UserList from "./UserList"
 import { FaMoneyBill } from "react-icons/fa"
 
 export default function Dashboard({ firstName, lastName, balance }) {
-
     const [users, setUsers] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const [modal, setModal] = useState(false)
     const navigate = useNavigate()
-
+    console.log("search is", searchTerm.length)
     function handleLogout() {
+        navigate('/api/v1/signin')
         localStorage.removeItem('token')
         localStorage.removeItem('username')
         localStorage.removeItem('firstName')
         localStorage.removeItem('lastName')
         localStorage.removeItem('balance')
-        navigate('/api/v1/signin')
     }
 
     function handlePIN() {
@@ -88,6 +87,6 @@ export default function Dashboard({ firstName, lastName, balance }) {
                 onChange={(e) => setSearchTerm(e.target.value)}></input>
             <FaSearch className="mt-4 h-8 w-6 ml-2" onClick={searchUsers}></FaSearch>
         </div>
-        {users.length === 0 ? null : <UserList users={users.user} />}
+        {users.length === 0 || searchTerm === "" ? null : <UserList users={users.user} /> }
     </div>
 }

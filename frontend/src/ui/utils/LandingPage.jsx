@@ -36,11 +36,16 @@ export default function LandingPage() {
                 <p className="text-7xl">All Convinience!</p>
             </div>
             <div className="flex flex-row items-start mt-8 ml-4">
-                <p className="max-w-96 ml-4 text-xl">Bid adieu to the clatter of coins and the shuffle of paper.
-                    EzPay invites you into a refined cashless experience—seamless, efficient, and devoid of physical currency inconveniences.
-                    Say hello to a future where transactions are effortlessly executed, making financial management and transactions a breeze. </p>
+                <p className="w-6/12 ml-4 text-xl">
+                    Unlock a realm of financial ease as EzPay transforms your transactions into seamless endeavors.
+                    With just a tap, navigate through a world where money flows effortlessly,
+                    eliminating the need for physical currency. Whether splitting bills or sending funds to loved ones,
+                    EzPay simplifies every monetary interaction. Embrace the future of finance uncomplicated, efficient,
+                    and at your fingertips. 
+                    Welcome to EzPay, where simplicity meets sophistication, and your financial world becomes refreshingly uncomplicated!</p>
                 <img src="./money.png" alt="money" className="h-96 w-96 ml-auto mr-12 -mt-40" />
             </div>
+        
         </>
     )
 }
