@@ -108,7 +108,9 @@ authRouter.post('/transaction', authMiddleware, async (req, res) => {
     const session = await mongoose.startSession()
     session.startTransaction()
     const {to, from, PIN, amount} = req.body
-    console.log(req.body)
+    if (!PIN || !amount) {
+        return res.status(400).json({ msg: "Oops, incorrect inputs" })
+    }
     const money = parseInt(amount)
     const sender = await User.findOne({ username: from, PIN: PIN }).session(session)
     if (!sender || sender.balance < money) {

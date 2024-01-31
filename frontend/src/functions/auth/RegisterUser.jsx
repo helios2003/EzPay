@@ -1,6 +1,6 @@
 import axios from "axios"
 
-export default async function RegisterPage({ username, firstName, lastName, password }) {
+export default async function RegisterUser({ username, firstName, lastName, password }) {
   const url = 'http://localhost:3000/api/v1/signup'
     try {
       const response = await axios.post(url, { 

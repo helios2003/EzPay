@@ -1,12 +1,12 @@
 import Modal from "react-modal"
 import { useState } from "react"
 import axios from "axios"
-import UserCard from './UserCard'
+import UserCard from '../cards/UserCard'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Transfer({ firstName, lastName, username }) {
-    const [money, setMoney] = useState(0)
+    const [amount, setAmount] = useState(0)
     const [PIN, setPIN] = useState("")
 
     const success = (time) => {
@@ -17,7 +17,8 @@ export default function Transfer({ firstName, lastName, username }) {
         toast.error("Money could not be transferred, please try again", { autoClose: time })
     }
 
-    async function sendMoney() {
+    async function sendMoney(amount) {
+        console.log(amount)
         try {
             const url = "http://localhost:3000/api/v2/transaction"
             const token = localStorage.getItem('token')
@@ -26,16 +27,20 @@ export default function Transfer({ firstName, lastName, username }) {
                 to: username,
                 from: localStorage.getItem('username'),
                 PIN: PIN,
-                amount: parseInt(money),
+                amount: parseInt(amount),
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             })
             if (response.status === 200) {
+                let balance = localStorage.getItem('balance')
+                balance -= amount
+                localStorage.setItem('balance', balance)
                 success(2000)
             }
         } catch (error) {
+            console.error(error)
             failure(2000)
         }
     }
@@ -51,7 +56,7 @@ export default function Transfer({ firstName, lastName, username }) {
                 type="text"
                 placeholder="Enter Amount"
                 className="border-2 text-center h-8 w-56 text-xl rounded-md"
-                onChange={(e) => setMoney(e.target.value)}
+                onChange={(e) => setAmount(e.target.value)}
             />
             <input
                 type="text"
@@ -61,7 +66,7 @@ export default function Transfer({ firstName, lastName, username }) {
             />
             <button
                 className="text-white bg-black h-8 w-24 text-xl rounded-lg"
-                onClick={sendMoney}
+                onClick={() => sendMoney(amount)}
             >
                 Transfer
             </button>

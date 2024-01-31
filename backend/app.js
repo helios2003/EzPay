@@ -14,15 +14,15 @@ const options = {
 
 app.use(bodyParser.json());
 app.use(cors({
-    origin: 'http://localhost:5173'
-  }));
+    origin: '*'
+  }))
 
 mongoose.connect(process.env.MONGO_URI, options)
 
 app.use('/api/v1', userRouter)
 app.use('/api/v2', authRouter)
 
-const PORT = 3000
+const PORT = process.env.PORT || 5000
 
 app.use((err, req, res, next) => {
     console.error(err.stack)

@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import Login from "./ui/auth/Login"
 import Register from "./ui/auth/Register"
-import Dashboard from "./ui/utils/Dashboard"
-import PrivateRoute from "./ui/utils/PrivateRoute"
-import LandingPage from "./ui/utils/LandingPage"
+import Dashboard from "./ui/pages/Dashboard"
+import PrivateRoute from "./functions/utils/PrivateRoute"
+import LandingPage from "./ui/pages/LandingPage"
 
 function App() {
 

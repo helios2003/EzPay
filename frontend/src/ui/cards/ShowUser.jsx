@@ -1,4 +1,4 @@
-import Transfer from "./Transfer"
+import Transfer from "../modal/Transfer"
 import { useState } from "react"
 import Modal from "react-modal"
 import UserCard from "./UserCard"

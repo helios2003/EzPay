@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import RegisterPage from "../../components/auth/RegisterPage"
+import RegisterUser from "../../functions/auth/RegisterUser"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -23,7 +23,7 @@ export default function Register() {
     }
     
     async function handleSubmit() {
-        await RegisterPage({ username, firstName, lastName, password})
+        await RegisterUser({ username, firstName, lastName, password})
         const token = localStorage.getItem('token')
         if (token === null || token === undefined) {
             failure(2000)
@@ -67,7 +67,7 @@ export default function Register() {
                 </div> 
                 <div className="mb-4">
                     <input
-                        type="text"
+                        type="password"
                         placeholder="Enter password"
                         className="border-2 border-stone-600 text-center h-8 w-64 rounded-lg"
                         onChange={(e) => setPassword(e.target.value)}

@@ -41,11 +41,12 @@ export default function LandingPage() {
                     With just a tap, navigate through a world where money flows effortlessly,
                     eliminating the need for physical currency. Whether splitting bills or sending funds to loved ones,
                     EzPay simplifies every monetary interaction. Embrace the future of finance uncomplicated, efficient,
-                    and at your fingertips. 
-                    Welcome to EzPay, where simplicity meets sophistication, and your financial world becomes refreshingly uncomplicated!</p>
+                    and at your fingertips. Welcome to EzPay, where simplicity meets sophistication, and your financial world
+                    becomes refreshingly uncomplicated!
+                </p>
                 <img src="./money.png" alt="money" className="h-96 w-96 ml-auto mr-12 -mt-40" />
             </div>
-        
+
         </>
     )
 }

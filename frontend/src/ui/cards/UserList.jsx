@@ -2,7 +2,6 @@ import React from 'react';
 import ShowUser from './ShowUser';
 
 export default function UserList({ users }) {
-  console.log("in user list")
   // dont show the logged in user
   const loggedInUser = localStorage.getItem('username')
   const filteredUsers = users.filter((user) => user.username !== loggedInUser)

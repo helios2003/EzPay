@@ -1,13 +1,12 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import LoginPage from "../../components/auth/LoginPage"
+import LoginUser from "../../functions/auth/LoginUser"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 export default function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
-    const [userData, setUserData] = useState(null)
 
     const navigate = useNavigate()
 
@@ -24,8 +23,7 @@ export default function Login() {
     }
 
     async function handleSubmit() {
-        const user = await LoginPage({ username, password })
-        setUserData(user) 
+        await LoginUser({ username, password })
         const token = localStorage.getItem('token')
         if (token === null || token === undefined) {
             failure(2000)

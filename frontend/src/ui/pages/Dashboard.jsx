@@ -3,24 +3,17 @@ import { FaSearch } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
 import Modal from "react-modal"
 import axios from "axios"
-import PIN from "./PIN"
-import UserList from "./UserList"
+import PIN from "../modal/PIN"
+import UserList from "../cards/UserList"
+import LogoutUser from "../../functions/auth/LogoutUser"
 import { FaMoneyBill } from "react-icons/fa"
 
 export default function Dashboard({ firstName, lastName, balance }) {
     const [users, setUsers] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const [modal, setModal] = useState(false)
+
     const navigate = useNavigate()
-    console.log("search is", searchTerm.length)
-    function handleLogout() {
-        navigate('/api/v1/signin')
-        localStorage.removeItem('token')
-        localStorage.removeItem('username')
-        localStorage.removeItem('firstName')
-        localStorage.removeItem('lastName')
-        localStorage.removeItem('balance')
-    }
 
     function handlePIN() {
         setModal(true)
@@ -73,7 +66,10 @@ export default function Dashboard({ firstName, lastName, balance }) {
                 ><PIN /></Modal>
                 <button
                     className="mt-4 text-xl ml-auto mr-4 text-white bg-black h-9 w-20 rounded-lg"
-                    onClick={handleLogout}
+                    onClick={() => {
+                        LogoutUser()
+                        navigate('/api/v1/signin')
+                    }}
                 >Logout</button>
             </div>
         </div>
