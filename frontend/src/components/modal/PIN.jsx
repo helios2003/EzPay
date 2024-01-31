@@ -1,11 +1,14 @@
 import React, { useState, useRef } from 'react'
 import { TiTick } from 'react-icons/ti'
 import axios from 'axios'
+import { useRecoilValue } from 'recoil'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { userState } from '../../store/atoms'
 
 export default function PIN() {
   const inputRefs = Array.from({ length: 4 }, () => useRef(null))
+  const user = useRecoilValue(userState)
 
   const success = (time) => {
     console.log("success")
@@ -44,7 +47,7 @@ export default function PIN() {
       const response = await axios.post(
         url,
         {
-          username: localStorage.getItem('username'),
+          username: user.username,
           PIN: submitString,
         },
         {

@@ -1,12 +1,16 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import LoginUser from "../../functions/auth/LoginUser"
+import { useSetRecoilState } from 'recoil';
+//import LoginUser from "../../functions/auth/LoginUser"
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { userState } from "../../store/atoms"
+import axios from "axios"
 
 export default function Login() {
     const [username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const setUser = useSetRecoilState(userState)
 
     const navigate = useNavigate()
 
@@ -21,6 +25,24 @@ export default function Login() {
     function handleClick() {
         navigate('/api/v1/signup')
     }
+
+    async function LoginUser({ username, password }) {
+       // const setUser = useSetRecoilState(userState)
+        const url = 'http://localhost:3000/api/v1/signin'
+          try {
+            const response = await axios.post(url, { username: username, password: password })
+            if (response.status === 200) {
+              const token = response.data.token
+              localStorage.setItem('token', token)
+              setUser(response.data)
+            } else {
+              console.log("Invalid username or password")
+            }
+          } catch (error) {
+            console.log("Something is up with our server, please try again")
+            console.log(error)
+          }
+      }
 
     async function handleSubmit() {
         await LoginUser({ username, password })

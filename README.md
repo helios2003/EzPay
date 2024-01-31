@@ -17,3 +17,7 @@ EzPay is an E-payment app made in the MERN stack. Through this app, users can ma
 
 **NOTE**: For transactions to work, you need a MongoDB with replicating nodes. Either create a MongoDB cluster or run a local MongoDB instance by taking reference from [here](https://docs.mongodb.com/manual/tutorial/deploy-replica-set-for-testing/). 
 
+## Technologies Used
+- MERN Stack
+- Recoil (for state management and avoiding prop drilling)
+

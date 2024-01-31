@@ -1,14 +1,17 @@
 import { useEffect, useState } from "react"
 import { FaSearch } from "react-icons/fa"
 import { useNavigate } from "react-router-dom"
+import { useRecoilValue } from 'recoil'
 import Modal from "react-modal"
 import axios from "axios"
 import PIN from "../modal/PIN"
 import UserList from "../cards/UserList"
-import LogoutUser from "../../functions/auth/LogoutUser"
 import { FaMoneyBill } from "react-icons/fa"
+import { userState } from "../../store/atoms"
 
-export default function Dashboard({ firstName, lastName, balance }) {
+export default function Dashboard() {
+    const user = useRecoilValue(userState)
+    const { firstName, lastName, balance } = user
     const [users, setUsers] = useState([])
     const [searchTerm, setSearchTerm] = useState("")
     const [modal, setModal] = useState(false)
@@ -34,11 +37,19 @@ export default function Dashboard({ firstName, lastName, balance }) {
             })
             const userData = response.data
             setUsers(userData)
-            console.log('User Data:', userData)
             return userData
         } catch (error) {
             console.error('Error searching user:', error)
         }
+    }
+
+    function LogoutUser() {
+        localStorage.removeItem('token')
+        localStorage.removeItem('username')
+        localStorage.removeItem('firstName')
+        localStorage.removeItem('lastName')
+        localStorage.removeItem('balance')
+        navigate('/api/v1/signin')
     }
 
     // debouncing
@@ -48,6 +59,7 @@ export default function Dashboard({ firstName, lastName, balance }) {
         }, 300)
         return () => clearTimeout(delayTimer)
       }, [searchTerm])
+
 
     return <div>
         <div className="flex flex-row border box-border h-16 shadow-md">
@@ -66,10 +78,7 @@ export default function Dashboard({ firstName, lastName, balance }) {
                 ><PIN /></Modal>
                 <button
                     className="mt-4 text-xl ml-auto mr-4 text-white bg-black h-9 w-20 rounded-lg"
-                    onClick={() => {
-                        LogoutUser()
-                        navigate('/api/v1/signin')
-                    }}
+                    onClick={LogoutUser}
                 >Logout</button>
             </div>
         </div>

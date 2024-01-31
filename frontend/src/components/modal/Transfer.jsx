@@ -4,10 +4,14 @@ import axios from "axios"
 import UserCard from '../cards/UserCard'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useRecoilValue, useSetRecoilState } from "recoil"
+import { userState } from "../../store/atoms"
 
 export default function Transfer({ firstName, lastName, username }) {
+    const user = useRecoilValue(userState)
     const [amount, setAmount] = useState(0)
     const [PIN, setPIN] = useState("")
+    const setUser = useSetRecoilState(userState)
 
     const success = (time) => {
         console.log("success")
@@ -25,7 +29,7 @@ export default function Transfer({ firstName, lastName, username }) {
 
             const response = await axios.post(url, {
                 to: username,
-                from: localStorage.getItem('username'),
+                from: user.username,
                 PIN: PIN,
                 amount: parseInt(amount),
             }, {
@@ -34,9 +38,9 @@ export default function Transfer({ firstName, lastName, username }) {
                 }
             })
             if (response.status === 200) {
-                let balance = localStorage.getItem('balance')
-                balance -= amount
-                localStorage.setItem('balance', balance)
+                let updatedUser = {...user} 
+                updatedUser.balance -= amount 
+                setUser(updatedUser) 
                 success(2000)
             }
         } catch (error) {
