@@ -24,7 +24,7 @@ export default function Transfer({ firstName, lastName, username }) {
     async function sendMoney(amount) {
         console.log(amount)
         try {
-            const url = "http://localhost:3000/api/v2/transaction"
+            const url = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/v2/transaction`
             const token = localStorage.getItem('token')
 
             const response = await axios.post(url, {

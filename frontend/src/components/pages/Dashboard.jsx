@@ -24,7 +24,7 @@ export default function Dashboard() {
 
     async function searchUsers() {
         try {
-            const url = "http://localhost:3000/api/v2/users"
+            const url = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/v2/users`
             const token = localStorage.getItem('token')
 
             const response = await axios.get(url, {

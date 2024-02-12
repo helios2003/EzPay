@@ -41,7 +41,7 @@ export default function PIN() {
   const handleSubmit = async () => {
     console.log(submitString)
     const token = localStorage.getItem('token')
-    const url = "http://localhost:3000/api/v2/addpin"
+    const url = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/v2/addpin`
     
     try {
       const response = await axios.post(

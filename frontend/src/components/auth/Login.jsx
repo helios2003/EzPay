@@ -28,7 +28,7 @@ export default function Login() {
 
     async function LoginUser({ username, password }) {
        // const setUser = useSetRecoilState(userState)
-        const url = 'http://localhost:3000/api/v1/signin'
+        const url = `${import.meta.env.VITE_REACT_BACKEND_URL}/api/v1/signin`
           try {
             const response = await axios.post(url, { username: username, password: password })
             if (response.status === 200) {
